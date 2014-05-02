@@ -29,51 +29,33 @@ public class Spring extends PhysicsElement {
    
    private double getAendPosition() {
       if (a_end != null){
-         return a_end.getPosition()+a_end.getRadius();
+         return a_end.getPosition();
       } else {
     	  if (b_end != null)
-    		  return b_end.getPosition()-b_end.getRadius()-this.restLength;
+         return b_end.getPosition()-this.restLength;
       }
       return 0;
    }
    
    public double getBendPosition() {
 	   if (b_end != null){
-		   return b_end.getPosition()-b_end.getRadius();
+		   return b_end.getPosition();
 	   } else {
 		   if (a_end != null)
-			   return a_end.getPosition()+ a_end.getRadius()+ this.restLength;
+		   return a_end.getPosition() + this.restLength;
 	   }
 	   return this.restLength;
    }
 
    public double getForce(Ball ball) {
-      double force = 0;
-      if ((a_end == null) || (b_end == null))
-         return force;
-      if ((ball != a_end) && (ball != b_end))
-         return force;
-      if (ball==a_end)
-      {
-    	 double length = this.getBendPosition()- this.getAendPosition();  //xb-xa > 0;
-    	 force = this.stiffness * (length - this.restLength); 
-    	 return force;
-      }
-      else if (ball==b_end){
-    	 double length = this.getBendPosition()- this.getAendPosition();  //xb-xa > 0;
-    	 force = -1*this.stiffness * (length - this.restLength);
-    	 return force; 
-      }
-      return force; 
+	   double force = 0;
+	   force=(Math.abs(getAendPosition()-getBendPosition())-restLength)*stiffness;
+	      if((getAendPosition() < getBendPosition())^ (ball==a_end))
+	    	  return -force;
+	      else return force;
    }
-   
-   //POSIBLEMENTE MAL HECHA
-	   public void computeNextState(double delta_t, MyWorld w){
-		   /*if ( a_end != null)
-			   a_end.computeNextState(delta_t,w);
-		   if (b_end != null)
-			   b_end.computeNextState(delta_t, w);
-			  */
+
+   public void computeNextState(double delta_t, MyWorld w){
 	   }
    
    public void updateState(){
@@ -87,9 +69,5 @@ public class Spring extends PhysicsElement {
 	   String line;
 	   line = "\t"+ this.getAendPosition() + "\t"+ this.getBendPosition();
 	   return line;
-   }
-   
-   public double getStiffness(){
-	   return this.stiffness;
    }
 }
