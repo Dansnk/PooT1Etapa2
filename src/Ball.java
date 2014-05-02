@@ -37,17 +37,9 @@ public class Ball extends PhysicsElement {
         a_t= getNetForce()/mass;
         pos_tPlusDelta = pos_t + speed_t*delta_t + a_t*delta_t*delta_t;
      } else {
-    	 
-    	 /*
-         a_t= getNetForce()/mass;
-         speed_tPlusDelta= speed_t + a_t*delta_t;
-         pos_tPlusDelta = pos_t + speed_t*delta_t + (0.5)*a_t*delta_t*delta_t;
-         */ 
-    	 
     	 a_t= getNetForce()/mass;
          speed_tPlusDelta=speed_t + 0.5*(3*a_t-a_tMinusDelta)*delta_t;
-         pos_tPlusDelta = pos_t + speed_t*delta_t + (1/6)*(4*a_t-a_tMinusDelta)*delta_t*delta_t;
-    	 
+         pos_tPlusDelta = pos_t + speed_t*delta_t + (1/6)*(4*a_t-a_tMinusDelta)*delta_t*delta_t;	 
      }
    }
    
@@ -78,7 +70,6 @@ public class Ball extends PhysicsElement {
 	   String line = null;
 	   line = "Position_Ball"+ id + "\t"+ "Speed_Ball"+ id;
 	   return line;
-   
    }
    
    public String getState(){
